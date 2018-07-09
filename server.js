@@ -49,15 +49,40 @@ app.post('/login', function(req, res) {
   if(req.body.username.length) {
     User.find({username: req.body.username, password: req.body.password}, function(err, data) {
       if(data.length > 0){
-        var token = jwt.sign({username: req.body.username}, 'atercesyeksihtsi', {
+        var token = jwt.sign({username: req.body.username}, 'thisisasecretkey', {
           expiresIn: '1h'
         });
-        res.send({isLoggedIn: true, token: token, username: req.body.username});
+        res.send({isLoggedIn: true, token: token, username: data[0].username});
       } else {
         res.send({isLoggedIn: false})
       }
     })
   }
+})
+
+app.use(function(req, res, next) {
+  var token = req.body.token || req.headers['token'];
+  jwt.verify(token, 'thisisasecretkey', function(err, decoded) {
+    if(!err && decoded) {
+      req.decoded = decoded;
+      next();
+    } else {
+      res.send({
+        flag: "Error",
+        err: "Token is not verfied"
+      })
+    }
+  })
+})
+
+app.get('/userData', function(req, res) {
+  User.find({username: req.decoded.username}, function(err, data) {
+    if(!err) {
+      res.send(data);
+    } else {
+      res.send({err: 'Error'})
+    }
+  })
 })
 
 db.on('error', console.error.bind(console, 'MongoDB is not connected!'));
