@@ -23,10 +23,10 @@
           <h3 class="page-header">{{i}} {{post.title}} <small>says..</small></h3>
           <p class="desc">{{post.desc}}</p>
           <hr>
-          <button type="button" class="btn btn-link" (click)="find(post._id)">Like</button>
-          <button type="button" class="btn btn-link">Comment</button>
+          <button type="button" class="btn btn-link" (click)="toggleLikes(post['likes'], post._id, i)" [ngClass]="{'like': post.likes.length}"> {{(post.likes.length) ? "Liked" : "Like"}} </button>
+          <button type="button" class="btn btn-link" (click)="toggleComments(i)">Comment</button>
           <button type="button" class="btn btn-link">Delete</button>
-          <app-comments [postId]="post._id" [comments]="post.comments"></app-comments>
+          <app-comments [postId]="post._id" [comments]="post.comments" *ngIf="posts[i]['commentToggle']"></app-comments>
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ export class CommentsComponent implements OnInit {
   addComment(event) {
     if(event.which === 13 && this.newcomment.length > 0) {
       this._postService.addComment({_id: this.postId, comment: this.newcomment}).subscribe(value => {
-        if(value.commAdded) {
+        if(value['commAdded']) {
           this.comments.push(this.newcomment);
           this.newcomment = '';
         }

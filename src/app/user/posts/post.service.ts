@@ -16,9 +16,11 @@ export class PostService {
     return this._http.get('http://localhost:3000/getPosts');
   }
 
-  findPost(id) {
-    this._http.post('http://localhost:3000/findPost', id).subscribe(value => {
-      console.log(value);
+  toggleLikes(id) {
+    this._http.post('http://localhost:3000/toggleLikes', id).subscribe(value => {
+      if(value) {
+        return true;
+      }
     });
   }
 

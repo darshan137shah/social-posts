@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../gateway/auth.service';
 import {Router, RouterModule} from '@angular/router';
 import { PostService } from '../posts/post.service';
+
 
 @Component({
   selector: 'app-home',
@@ -15,8 +16,9 @@ export class HomeComponent implements OnInit {
   cUser: any;
   userTitle: String = '';
   posts: any = [];
+  showComments: boolean = false;
 
-  constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _router: Router, private _postService : PostService ) { }
+  constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _router: Router, private _postService : PostService) { }
 
   ngOnInit() {
       this._authService.userData().subscribe((data) => {
@@ -32,8 +34,21 @@ export class HomeComponent implements OnInit {
 
   }
 
-  find(id) {
-    this._postService.findPost({_id: id});
+  toggleLikes(likes, id, index) {
+    // e.target.classList.toggle('like');
+
+    if(!likes.length) {
+      this.posts[index]['likes'] = [this.cUser.username];
+      this._postService.toggleLikes({_id: id, likes: [this.cUser.username]});
+    } else {
+      this.posts[index]['likes'] = [];
+      this._postService.toggleLikes({_id: id, likes: []});
+    }
+
+  }
+
+  toggleComments(i) {
+    this.posts[i]['commentToggle'] = !this.posts[i]['commentToggle'];
   }
 
   goBack() {

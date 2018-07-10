@@ -121,9 +121,9 @@ app.get('/getPosts', function(req, res) {
   })
 });
 
-app.post('/findPost', function(req, res) {
-  console.log(req.body._id);
-  Post.findById(req.body._id, function(err, data) {
+app.post('/toggleLikes', function(req, res) {
+  console.log(req.body);
+  Post.findByIdAndUpdate(req.body._id, {$set: {likes: req.body.likes}} , {new: true}, function(err, data) {
     console.log(data);
   })
 })

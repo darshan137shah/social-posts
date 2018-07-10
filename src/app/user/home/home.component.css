@@ -2,3 +2,10 @@
   text-transform: capitalize;
 }
 
+.like {
+  font-weight: bold;
+}
+
+.unlike {
+  font-weight: normal;
+}
