@@ -2,10 +2,51 @@
   text-transform: capitalize;
 }
 
+.glyphicon{
+  font-size: smaller;
+}
+
+.btn:focus {
+  outline: 0;
+}
+
+.btn-link{
+  text-decoration: none;
+  outline: 0;
+  border: 0;
+}
+
+.posttitle {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
 .like {
   font-weight: bold;
 }
 
-.unlike {
-  font-weight: normal;
+.likes {
+  text-transform: capitalize;
+}
+
+.likes .glyphicon {
+  background-color: royalblue;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.sideblock {
+  position: relative;
+  height: 100vh;
+  margin: 0;
+  padding:0;
+}
+
+.sideblock > div{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

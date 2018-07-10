@@ -18,31 +18,39 @@ export class HomeComponent implements OnInit {
   posts: any = [];
   showComments: boolean = false;
 
+
   constructor(private _activatedRoute: ActivatedRoute, private _authService: AuthService, private _router: Router, private _postService : PostService) { }
 
   ngOnInit() {
+
       this._authService.userData().subscribe((data) => {
         this.cUser = data[0];
         this.userTitle = data[0].firstname;
       });
 
       this._postService.getPosts().subscribe((posts) => {
-        console.log('Its giving me the posts');
-        console.log(posts)
         this.posts = posts;
+        console.log(this.posts)
       });
 
+      this._postService.$newPost.subscribe((data) => {
+        this.posts.push(data);
+      })
   }
 
   toggleLikes(likes, id, index) {
-    // e.target.classList.toggle('like');
-
     if(!likes.length) {
-      this.posts[index]['likes'] = [this.cUser.username];
-      this._postService.toggleLikes({_id: id, likes: [this.cUser.username]});
+      this._postService.toggleLikes({_id: id, likes: [this.cUser.username]}).subscribe((value) => {
+        if(value['dataUpdated']) {
+          this.posts[index]['likes'] = [this.cUser.username];
+        }
+      });
     } else {
-      this.posts[index]['likes'] = [];
-      this._postService.toggleLikes({_id: id, likes: []});
+      this._postService.toggleLikes({_id: id, likes: []}).subscribe((value )=> {
+        if(value['dataUpdated']) {
+          this.posts[index]['likes'] = [];
+        }
+      });
     }
 
   }
@@ -54,4 +62,11 @@ export class HomeComponent implements OnInit {
   goBack() {
     this._router.navigate([this.cUser.username + '/home']);
   }
+
+  deletePost(index, postid) {
+    this._postService.deletePost(postid).subscribe(() => {
+      this.posts.splice(index, 1);
+    })
+  }
+
 }

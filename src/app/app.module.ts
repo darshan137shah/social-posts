@@ -15,6 +15,7 @@ import { InterceptReqService } from './intercept-req.service';
 import { CreateComponent } from './user/posts/create/create.component'
 import { PostService } from './user/posts/post.service';
 import { CommentsComponent } from './user/home/comments/comments.component';
+import { AuthGuard } from './gateway/auth.guard';
 
 @NgModule({
   declarations: [
@@ -33,8 +34,8 @@ import { CommentsComponent } from './user/home/comments/comments.component';
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
       {path: 'reg', component: RegisterComponent},
-      {path: ':user/home', component: HomeComponent, children: [
-          {path: 'create', component: CreateComponent}
+      {path: ':user/home', component: HomeComponent, canActivate: [ AuthGuard ], children: [
+          {path: 'create', component: CreateComponent, canActivate: [ AuthGuard]}
         ]},
       {path: '', redirectTo: 'login', pathMatch: 'full'}
     ])
@@ -43,7 +44,7 @@ import { CommentsComponent } from './user/home/comments/comments.component';
     useClass: InterceptReqService,
     provide: HTTP_INTERCEPTORS,
     multi: true
-  }, PostService ],
+  }, PostService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

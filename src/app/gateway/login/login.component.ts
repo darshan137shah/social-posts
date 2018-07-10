@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private _authService: AuthService ) { }
 
   ngOnInit() {
+    this._authService.logout();
     this._authService.$userAlert.subscribe((data) => {
       this.loginSuccess = data;
     })

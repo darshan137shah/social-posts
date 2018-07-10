@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-side">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -8,23 +8,26 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" [routerLink]="['/']">Hammer Market</a>
+      <a class="navbar-brand" [routerLink]="['/']">Blog-Serve</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a [routerLink]="['/home']">Home <span class="sr-only">(current)</span></a></li>
-        <li><a
-          *ngIf='activeUser'>New Post</a></li>
-        <li><a
-               *ngIf='activeUser'>All Posts</a></li>
+        <li class="active text-capitalize text-center" *ngIf='activeUser'>
+          <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span></h3>
+          <h3>{{currentUser}}</h3>
+        </li>
+        <li><a [routerLink]="['/home']">Home <span class="sr-only">(current)</span></a></li>
+        <li><a *ngIf='activeUser' (click)="newpost()">New Post</a></li>
+        <li><a *ngIf='activeUser' (click)="allpost()">All Posts</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
         <li><a [routerLink]='["login"]' *ngIf='!activeUser'>Login</a></li>
-        <li><a (click)='logout()' *ngIf="activeUser">Logout</a></li>
+        <li><a (click)='logOut()' *ngIf="activeUser">Logout</a></li>
         <li><a [routerLink]='["reg"]' *ngIf='!activeUser'>Register</a></li>
+        <li class="text-center"><kbd *ngIf="date">{{date}}</kbd></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

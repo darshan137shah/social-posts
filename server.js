@@ -105,7 +105,7 @@ app.post('/newPost', function(req, res) {
     console.log(req.body);
     Post.create(req.body, function(err, data) {
       if(!err)  {
-        res.send({isPosted: true})
+        res.send({isPosted: true, data: data})
       } else {
         res.send({isPosted: false})
       }
@@ -121,10 +121,26 @@ app.get('/getPosts', function(req, res) {
   })
 });
 
+app.post('/deletePost', function(req, res) {
+  Post.findByIdAndDelete(req.body._id, function(err, data) {
+    if(!err) {
+      res.send({
+        postDeleted: true
+      })
+    } else {
+      res.send({postDeleted: false});
+    }
+  })
+})
+
 app.post('/toggleLikes', function(req, res) {
   console.log(req.body);
   Post.findByIdAndUpdate(req.body._id, {$set: {likes: req.body.likes}} , {new: true}, function(err, data) {
-    console.log(data);
+    if(!err) {
+    res.send({dataUpdated: true});
+    } else {
+    res.send({dataUpdated: false});
+    }
   })
 })
 

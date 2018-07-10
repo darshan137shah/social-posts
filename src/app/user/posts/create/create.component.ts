@@ -1,5 +1,6 @@
-import { Component, OnInit , Input} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PostService } from '../post.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-create',
@@ -14,12 +15,13 @@ export class CreateComponent implements OnInit {
   constructor(private _postService : PostService) { }
 
   ngOnInit() {
+    this._postService.$newPostFlag.subscribe((data) => {
+      this.posted = data;
+    })
   }
 
   createNew() {
-    this._postService.createnew(this.post).subscribe((data) => {
-      this.posted = data['isPosted'];
-    });
+    this._postService.createnew(this.post);
   }
 
   loadmore() {
