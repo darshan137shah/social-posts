@@ -1,0 +1,33 @@
+
+  <div class="row" *ngIf="!posted">
+    <div class="col-md-12">
+      <div class="alert text-right">
+        <h2>New Post</h2>
+        <form class='text-left' name='postForm'>
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" placeholder="Post Title" [(ngModel)]='post.title'>
+          </div>
+
+          <div class="form-group">
+            <label for="desc">Description</label>
+            <input type="text" class="form-control" name="desc" placeholder="Post Description" [(ngModel)]='post.desc'>
+          </div>
+          <button type="submit" class="btn btn-default" (click)="createNew()">Post</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="posted">
+    <div class="col-md-12">
+      <div class="text-center">
+        <h2 class="alert alert-success" >Your Post Is Ready!</h2>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" (click)="loadmore()">Create more</button>
+      </div>
+    </div>
+  </div>
+
+  <hr/>

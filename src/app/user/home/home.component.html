@@ -3,7 +3,33 @@
     <div class="col-md-12">
       <div class="jumbotron">
         <h1>Hello, <span class="firstname">{{userTitle}}!</span></h1>
+        <div><button class="btn btn-primary" [routerLink]="['create']">Make a post</button></div>
+        <div><button class="btn btn-primary" (click)="goBack()">List the posts</button></div>
       </div>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <div class="row" *ngFor="let post of posts; let i = index">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="thumbnail">
+        <div class="caption">
+          <h3 class="page-header">{{i}} {{post.title}} <small>says..</small></h3>
+          <p class="desc">{{post.desc}}</p>
+          <hr>
+          <button type="button" class="btn btn-link" (click)="find(post._id)">Like</button>
+          <button type="button" class="btn btn-link">Comment</button>
+          <button type="button" class="btn btn-link">Delete</button>
+          <app-comments [postId]="post._id" [comments]="post.comments"></app-comments>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
   </div>
 </div>

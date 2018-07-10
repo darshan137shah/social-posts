@@ -1,0 +1,7 @@
+<div class="well well-sm">
+  <p *ngFor="let comment of comments">{{comment}}</p>
+
+  <div class="form-group">
+  <input type="text" class="form-control comment" placeholder="Add Comment" (keyup)="addComment($event)" [(ngModel)]="newcomment">
+  </div>
+</div>

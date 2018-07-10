@@ -27,6 +27,7 @@ export class AuthService {
     this._http.post('http://localhost:3000/login', user).subscribe((resp: any) => {
       if (resp.isLoggedIn) {
         this._cookieService.set('token', resp.token);
+        this.$userAlert.next(true);
         this._router.navigate(['/' + resp.username + '/home']);
       } else {
         this.$userAlert.next(false);

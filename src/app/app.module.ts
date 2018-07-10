@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Route, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -12,6 +12,9 @@ import { NavComponent } from './gateway/nav/nav.component';
 import { HomeComponent } from './user/home/home.component';
 import { AuthService } from './gateway/auth.service';
 import { InterceptReqService } from './intercept-req.service';
+import { CreateComponent } from './user/posts/create/create.component'
+import { PostService } from './user/posts/post.service';
+import { CommentsComponent } from './user/home/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { InterceptReqService } from './intercept-req.service';
     LoginComponent,
     RegisterComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    CreateComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,9 @@ import { InterceptReqService } from './intercept-req.service';
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
       {path: 'reg', component: RegisterComponent},
-      {path: ':user/home', component: HomeComponent},
+      {path: ':user/home', component: HomeComponent, children: [
+          {path: 'create', component: CreateComponent}
+        ]},
       {path: '', redirectTo: 'login', pathMatch: 'full'}
     ])
   ],
@@ -36,7 +43,7 @@ import { InterceptReqService } from './intercept-req.service';
     useClass: InterceptReqService,
     provide: HTTP_INTERCEPTORS,
     multi: true
-  }],
+  }, PostService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
