@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -31,13 +31,15 @@ import { AuthGuard } from './gateway/auth.guard';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       {path: 'login', component: LoginComponent},
       {path: 'reg', component: RegisterComponent},
       {path: ':user/home', component: HomeComponent, canActivate: [ AuthGuard ], children: [
           {path: 'create', component: CreateComponent, canActivate: [ AuthGuard]}
         ]},
-      {path: '', redirectTo: 'login', pathMatch: 'full'}
+      {path: '', redirectTo: 'login', pathMatch: 'full'},
+      { path: '**', redirectTo: 'login'}
     ])
   ],
   providers: [ AuthService, CookieService, {

@@ -3,20 +3,32 @@
     <div class="col-md-12">
       <div class="alert text-center">
         <h1>Sign Up</h1>
-        <form class='text-left' name='regForm'>
+        <form class='text-left' [formGroup]="regForm" (ngSubmit)="register()">
           <div class="form-group">
             <label for="firstname">Firstname</label>
-            <input type="text" class="form-control" name="firstname" placeholder="Firstname" [(ngModel)]='user.firstname'>
+            <input type="text" class="form-control" formControlName="firstname" placeholder="Firstname" />
+            <div class="alert alert-default" *ngIf='regForm.get("firstname").invalid && regForm.get("firstname").dirty'>
+              <kbd *ngIf="regForm.get('firstname').errors.required">Please enter the First Name.</kbd>
+              <kbd *ngIf="regForm.get('firstname').errors.minlength">Please enter at least 2 character long.</kbd>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="lastname">Lastname</label>
-            <input type="text" class="form-control" name="lastname" placeholder="Lastname" [(ngModel)]='user.lastname'>
+            <input type="text" class="form-control" formControlName="lastname" placeholder="Lastname" />
+            <div class="alert alert-default" *ngIf='regForm.get("lastname").invalid && regForm.get("lastname").dirty'>
+              <kbd *ngIf="regForm.get('lastname').errors.required">Please enter the Last Name.</kbd>
+              <kbd *ngIf="regForm.get('lastname').errors.minlength">Please enter at least 2 character long.</kbd>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" name="exampleInputEmail1" placeholder="Username" [(ngModel)]='user.username'>
+            <input type="text" class="form-control" formControlName="username" placeholder="Username" />
+            <div class="alert alert-default" *ngIf='regForm.get("username").invalid && regForm.get("username").dirty'>
+              <kbd *ngIf="regForm.get('username').errors.required">Please enter the User Name.</kbd>
+              <kbd *ngIf="regForm.get('username').errors.minlength">Please enter at least 5 character long.</kbd>
+            </div>
           </div>
 
           <div class="form-group" *ngIf="userexists">
@@ -25,11 +37,14 @@
 
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" placeholder="Password" [(ngModel)]='user.password'>
+            <input type="password" class="form-control" formControlName="password" placeholder="Password" />
+            <div class="alert alert-default" *ngIf='regForm.get("password").invalid && regForm.get("password").dirty'>
+              <kbd *ngIf="regForm.get('password').errors.required">Please enter the Password.</kbd>
+              <kbd *ngIf="regForm.get('password').errors.minlength">Please enter at least 5 character long.</kbd>
+            </div>
           </div>
 
-
-          <button type="submit" class="btn btn-default" (click)=register()>Register</button>
+          <button type="submit" class="btn btn-default">Register</button>
         </form>
       </div>
     </div>

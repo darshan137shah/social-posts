@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
 import {AuthService} from '../auth.service';
-import { CookieService } from 'ngx-cookie-service';
 import {interval} from 'rxjs';
 
 @Component({
@@ -16,12 +15,12 @@ export class NavComponent implements OnInit {
   timeInt = interval(1000);
   date: string;
 
-  constructor(private _authService: AuthService, private _router: Router, private _cookieService : CookieService ) { }
+  constructor(private _authService: AuthService, private _router: Router) { }
 
   ngOnInit() {
     this._authService.$userAlert.subscribe((data) => {
       this.activeUser = data;
-      this.currentUser = this._cookieService.get('currentUser');
+      this.currentUser = sessionStorage.getItem('currentUser');
     });
 
     this.timeInt.subscribe((n) => {
